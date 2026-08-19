@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const faqs = [
   { question: 'What is React?', answer: 'React is a JavaScript library for building user interfaces.' },
   { question: 'What is a hook?', answer: 'Hooks let function components use state and other React features.' },
@@ -5,16 +7,23 @@ const faqs = [
 ];
 
 function FAQAccordion() {
+  const [openIndex,setOpenIndex]=useState(null)
   return (
     <div className="app-shell">
       <div className="card">
         <h2 className="exercise-title">Q7. FAQ Accordion</h2>
         <p className="exercise-meta">Topic: useState</p>
         <p>Implement the accordion behavior so one question opens at a time.</p>
-        {faqs.map((faq) => (
+        {faqs.map((faq,index) => (
           <div className="faq-item" key={faq.question}>
-            <div className="faq-question">{faq.question}</div>
-            <p>Student answer panel will appear here.</p>
+            <div 
+            className="faq-question" onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            style={{ cursor: 'pointer', fontWeight: 'bold' }} >{openIndex === index ? "▼ " : "▶ "}{faq.question}</div>
+            {openIndex === index && (
+  <p className="faq-answer" style={{ marginTop: '8px', color: '#555' }}>
+    {faq.answer}
+  </p>
+)}
           </div>
         ))}
       </div>

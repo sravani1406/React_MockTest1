@@ -1,4 +1,12 @@
+import { useEffect, useState } from "react";
+
 function UserDirectory() {
+  const [users,setUsers]=useState([])
+  useEffect(()=>{
+    fetch(`https://jsonplaceholder.typicode.com/users`)
+    .then(res=>res.json())
+    .then(data=>setUsers(data))
+  },[])
   return (
     <div className="app-shell">
       <div className="card">
@@ -8,7 +16,16 @@ function UserDirectory() {
         <div className="user-list">
           <div className="user-card">
             <h3>User list will appear here</h3>
-            <p>Student implementation placeholder</p>
+            
+            {
+              users.map((user,i)=>{
+                return(
+                  <li key={i}>
+                  {user.name} - {user.email}
+                  </li>
+                )
+              })
+            }
           </div>
         </div>
       </div>
